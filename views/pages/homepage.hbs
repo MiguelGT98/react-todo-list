@@ -1,0 +1,10 @@
+<h1>Hello MVC</h1>
+<p>This is my first page</p>
+<h2>Our products</h2>
+<ul>
+    {{#each products}}
+    <li>
+        Nombre: {{name}} ($ {{price}})
+    </li>
+    {{/each}}
+</ul>
