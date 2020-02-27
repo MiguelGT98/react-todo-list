@@ -1,10 +1,20 @@
-<h1>Hello MVC</h1>
-<p>This is my first page</p>
-<h2>Our products</h2>
-<ul>
-    {{#each products}}
-    <li>
-        Nombre: {{name}} ($ {{price}})
-    </li>
-    {{/each}}
-</ul>
+<link rel="stylesheet" href="/css/homepage.css">
+<h2 class="text-2xl font-bold m-6">Our products</h2>
+<div class="m-6">
+    <table border="0" cellspacing="0" cellpadding="0" class="w-full shadow-md border-1">
+        <thead>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th class="text-right">Precio</th>
+        </thead>
+        <tbody>
+            {{#each products}}
+            <tr class="product">
+                <td><a href="/product/{{id}}">{{name}}</a></td>
+                <td><a href="/product/{{id}}">{{description}}</a></td>
+                <td class="text-right"><a href="/product/{{id}}">{{price}}</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

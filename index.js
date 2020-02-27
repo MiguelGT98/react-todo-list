@@ -1,31 +1,46 @@
 // Importa el paquete de express
-let express = require('express');
+let express = require("express");
 // Obtiene una instancia de express
 let app = express();
 
+// Parsear body
+let bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 // Importa las configuraciones
-let appRoutes = require('./routes/app');
+let appRoutes = require("./routes/app");
+
+//Importar path
+let path = require("path");
+//Definir carpeta public
+app.use(express.static(path.join(__dirname, "/public")));
 
 // Define que configuraciones de rutas se van a utilizar para la ruta
-app.use('/', appRoutes);
+app.use("/", appRoutes);
 
 // Configuraciones de las vistas
-let exphbs = require('express-handlebars');
+let exphbs = require("express-handlebars");
 // Define la extensión que se va a utilizar para los archivos que representan
 // las vistas
-const extNameHbs = 'hbs';
+const extNameHbs = "hbs";
 // Crea una instancia de hbs con las conifugraciones definidas
-let hbs = exphbs.create({extname: extNameHbs});
+let hbs = exphbs.create({ extname: extNameHbs });
 // Establece el uso de handlebars dentro de express.js
 app.engine(extNameHbs, hbs.engine);
-app.set('view engine', extNameHbs);
+app.set("view engine", extNameHbs);
 
 // Importa la configuración de la app
-let appConfig = require('./configs/app');
+let appConfig = require("./configs/app");
 
 // Comienza el servidor en el puerto 3000 de localhost
 // para ver el sistema
-app.listen(appConfig.express_port,() => {
-  let show = 'App listening on port ' + appConfig.express_port + '! (http://localhost:' + appConfig.express_port +')';
+app.listen(appConfig.express_port, () => {
+  let show =
+    "App listening on port " +
+    appConfig.express_port +
+    "! (http://localhost:" +
+    appConfig.express_port +
+    ")";
   console.log(show);
 });
