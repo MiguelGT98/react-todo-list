@@ -42,7 +42,7 @@ exports.product = (req, res) => {
   });
 };
 
-// Reglas para la respuesta para la petición "/product/:id/editar"
+// Reglas para la respuesta para la petición "/product/:id/edit"
 exports.editProduct = (req, res) => {
   ProductModel.get(req.params.id).then(data => {
     // Guardamos los productos en una variable
@@ -112,6 +112,40 @@ exports.postProduct = (req, res) => {
         });
       });
   }
+};
+
+exports.newProduct = (req, res) => {
+  // Enviamos los datos a la vista
+  res.render("pages/newProduct");
+};
+
+exports.postNewProduct = (req, res) => {
+  const product = req.body;
+
+  ProductModel.create(product)
+    .then(data => {
+      return ProductModel.all();
+    })
+    .then(data => {
+      // Guardamos los productos en una variable
+      let products = data;
+      // Formateamos price en cada producto
+      products = products.map(product => {
+        const price = product.price;
+        delete product.price;
+        return {
+          ...product,
+          price: Intl.NumberFormat("es-MX", {
+            style: "currency",
+            currency: "MXN"
+          }).format(price)
+        };
+      });
+      // Enviamos los datos a la vista
+      res.render("pages/homepage", {
+        products: products
+      });
+    });
 };
 
 // Reglas para la respuesta para la petición "/about"

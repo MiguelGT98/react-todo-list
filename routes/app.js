@@ -8,9 +8,12 @@ let PagesController = require("../controllers/PagesController");
 // con las palabras "Hello World!"
 router.get("/", PagesController.homepage);
 router.get("/product/:id", PagesController.product);
-router.get("/product/:id/editar", PagesController.editProduct);
+router.get("/product/:id/edit", PagesController.editProduct);
+router.get("/new/product", PagesController.newProduct);
 
-router.post("/product/:id/editar", PagesController.postProduct);
+// Rutas para post requests
+router.post("/product/:id/edit", PagesController.postProduct);
+router.post("/new/product", PagesController.postNewProduct);
 
 // Identifica la ruta "/about" y la respuesta de la ruta
 router.get("/about", PagesController.about);

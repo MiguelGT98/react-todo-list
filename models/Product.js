@@ -35,3 +35,7 @@ exports.update = (id, product) => {
     .where("id", id)
     .update({ ...product });
 };
+
+exports.create = product => {
+  return knex.from("products").insert({ ...product });
+};
