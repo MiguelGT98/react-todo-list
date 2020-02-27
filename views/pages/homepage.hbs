@@ -1,15 +1,15 @@
 <link rel="stylesheet" href="/css/homepage.css">
 <h2 class="text-2xl font-bold m-6">Our products</h2>
 <div class="m-6">
-    <table border="0" cellspacing="0" cellpadding="0" class="w-full shadow-md border-1">
+    <table border="0" cellspacing="0" cellpadding="0" class="w-full shadow-md border-1" id="product-table">
         <thead>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th class="text-right">Precio</th>
+            <th data-sortname="name">Nombre</th>
+            <th data-sortname="description">Descripción</th>
+            <th data-sortname="price" class="text-right">Precio</th>
         </thead>
         <tbody>
             {{#each products}}
-            <tr class="product">
+            <tr class="product" data-name="{{name}}" data-description="{{description}}" data-price="{{price}}">
                 <td><a href="/product/{{id}}">{{name}}</a></td>
                 <td><a href="/product/{{id}}">{{description}}</a></td>
                 <td class="text-right"><a href="/product/{{id}}">{{price}}</a></td>
@@ -22,3 +22,45 @@
             href="/new/product">Nuevo producto</a>
     </div>
 </div>
+<script>
+    window.onload = () => {
+        let table = document.getElementById("product-table")
+        Array.from(table.children[0].children[0].children).forEach(child => {
+            child.addEventListener("click", sortByName)
+        })
+    }
+
+    const sortByName = (e) => {
+        const currentMode = e.target.dataset.currentMode || "DESC"
+        let table = document.getElementById("product-table")
+
+        Array.from(table.children[0].children[0].children).forEach(child => {
+            child.classList.remove("DESC")
+            child.classList.remove("ASC")
+        })
+
+        let sortedElements = Array.from(table.children[1].children).sort((productA, productB) => {
+            if (currentMode === "DESC") {
+                e.target.dataset.currentMode = "ASC"
+                e.target.classList.add("ASC")
+                e.target.classList.remove("DESC")
+                return productA.dataset[e.target.dataset.sortname] > productB.dataset[e.target.dataset.sortname]
+            } else {
+                e.target.classList.add("DESC")
+                e.target.classList.remove("ASC")
+                e.target.dataset.currentMode = "DESC"
+                return productA.dataset[e.target.dataset.sortname] < productB.dataset[e.target.dataset.sortname]
+            }
+        })
+
+        var child = table.children[1].lastElementChild;
+        while (child) {
+            table.children[1].removeChild(child);
+            child = table.children[1].lastElementChild;
+        }
+
+        sortedElements.forEach(children => {
+            table.children[1].appendChild(children)
+        })
+    }
+</script>
