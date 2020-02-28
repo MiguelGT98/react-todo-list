@@ -3,9 +3,18 @@ let ProductModel = require("../models/Product");
 
 // Reglas para la respuesta para la petición "/"
 exports.homepage = (req, res) => {
-  ProductModel.all().then(data => {
+  ProductModel.all(req.query.page || 0, 5).then(data => {
     // Guardamos los productos en una variable
     let products = data;
+    const n = products.count[0].count;
+    const current = req.query.page !== undefined ? parseInt(req.query.page) : 0;
+    const count = [];
+    for (let i = 0; i < Math.ceil(n / 5); i++) {
+      if (current !== i) count.push(i);
+    }
+
+    delete products.count;
+
     // Formateamos price en cada producto
     products = products.map(product => {
       const price = product.price;
@@ -20,7 +29,9 @@ exports.homepage = (req, res) => {
     });
     // Enviamos los datos a la vista
     res.render("pages/homepage", {
-      products: products
+      products: products,
+      count,
+      current
     });
   });
 };
@@ -57,30 +68,9 @@ exports.postProduct = (req, res) => {
   if (req.body.delete === "true") {
     const id = req.body.id;
 
-    ProductModel.delete(id)
-      .then(data => {
-        return ProductModel.all();
-      })
-      .then(data => {
-        // Guardamos los productos en una variable
-        let products = data;
-        // Formateamos price en cada producto
-        products = products.map(product => {
-          const price = product.price;
-          delete product.price;
-          return {
-            ...product,
-            price: Intl.NumberFormat("es-MX", {
-              style: "currency",
-              currency: "MXN"
-            }).format(price)
-          };
-        });
-        // Enviamos los datos a la vista
-        res.render("pages/homepage", {
-          products: products
-        });
-      });
+    ProductModel.delete(id).then(data => {
+      return res.redirect("/");
+    });
   } else if (req.body.edit === "true") {
     const product = req.body;
     const id = req.body.id;
@@ -92,24 +82,7 @@ exports.postProduct = (req, res) => {
         return ProductModel.all();
       })
       .then(data => {
-        // Guardamos los productos en una variable
-        let products = data;
-        // Formateamos price en cada producto
-        products = products.map(product => {
-          const price = product.price;
-          delete product.price;
-          return {
-            ...product,
-            price: Intl.NumberFormat("es-MX", {
-              style: "currency",
-              currency: "MXN"
-            }).format(price)
-          };
-        });
-        // Enviamos los datos a la vista
-        res.render("pages/homepage", {
-          products: products
-        });
+        return res.redirect("/");
       });
   }
 };
@@ -127,24 +100,7 @@ exports.postNewProduct = (req, res) => {
       return ProductModel.all();
     })
     .then(data => {
-      // Guardamos los productos en una variable
-      let products = data;
-      // Formateamos price en cada producto
-      products = products.map(product => {
-        const price = product.price;
-        delete product.price;
-        return {
-          ...product,
-          price: Intl.NumberFormat("es-MX", {
-            style: "currency",
-            currency: "MXN"
-          }).format(price)
-        };
-      });
-      // Enviamos los datos a la vista
-      res.render("pages/homepage", {
-        products: products
-      });
+      return res.redirect("/");
     });
 };
 

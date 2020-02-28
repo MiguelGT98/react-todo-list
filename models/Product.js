@@ -11,8 +11,21 @@ exports.factory = (name, description, price) => {
 };
 
 // Obtiene todos los productos en la base
-exports.all = () => {
-  return knex.from("products").select("*");
+exports.all = (offset, limit) => {
+  let data;
+  return knex
+    .from("products")
+    .select("*")
+    .offset(offset * limit)
+    .limit(limit)
+    .then(result => {
+      data = result;
+      return knex.from("products").count("id as count");
+    })
+    .then(result => {
+      data.count = result;
+      return data;
+    });
 };
 
 exports.get = id => {

@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/css/homepage.css">
-<h2 class="text-2xl font-bold m-6">Our products</h2>
+<h2 class="text-2xl font-bold m-6">Our products
+</h2>
 <div class="m-6">
     <table border="0" cellspacing="0" cellpadding="0" class="w-full shadow-md border-1" id="product-table">
         <thead>
@@ -17,6 +18,11 @@
             {{/each}}
         </tbody>
     </table>
+    <div class="m-auto mt-4 flex items-center justify-center max-w-sm">
+        {{#each count}}
+        <a href="/?page={{this}}">{{this}}</a>
+        {{/each}}
+    </div>
     <div class="mt-4 flex items-center justify-between">
         <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             href="/new/product">Nuevo producto</a>
