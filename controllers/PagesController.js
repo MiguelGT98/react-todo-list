@@ -77,13 +77,9 @@ exports.postProduct = (req, res) => {
     delete product.edit;
     delete product.id;
 
-    ProductModel.update(id, product)
-      .then(data => {
-        return ProductModel.all();
-      })
-      .then(data => {
-        return res.redirect("/");
-      });
+    ProductModel.update(id, product).then(data => {
+      return res.redirect("/product/" + id);
+    });
   }
 };
 
@@ -95,13 +91,9 @@ exports.newProduct = (req, res) => {
 exports.postNewProduct = (req, res) => {
   const product = req.body;
 
-  ProductModel.create(product)
-    .then(data => {
-      return ProductModel.all();
-    })
-    .then(data => {
-      return res.redirect("/");
-    });
+  ProductModel.create(product).then(data => {
+    return res.redirect("/");
+  });
 };
 
 // Reglas para la respuesta para la petición "/about"
