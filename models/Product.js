@@ -46,7 +46,7 @@ exports.update = (id, product) => {
   return knex
     .from("products")
     .where("id", id)
-    .update({ ...product });
+    .update({ ...product, updated_at: new Date() });
 };
 
 exports.create = product => {
