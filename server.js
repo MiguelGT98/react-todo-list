@@ -59,6 +59,11 @@ app.use("/", webRoutes);
 app.use("/app", authMiddleware.isAuth, appRoutes);
 
 /**
+ * Serve static files on uploads
+ */
+app.use("/uploads", express.static("uploads"));
+
+/**
  * App Init
  */
 app.listen(appConfig.expressPort, () => {

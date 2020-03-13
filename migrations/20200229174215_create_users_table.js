@@ -10,6 +10,7 @@ exports.up = function(knex) {
         .string("role", 255)
         .notNullable()
         .defaultsTo("user");
+      table.string("photo", 255).notNullable();
     })
     .createTable("links", table => {
       table.increments("id");

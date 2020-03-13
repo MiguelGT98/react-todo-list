@@ -114,3 +114,9 @@ exports.changePassword = (id, user) => {
     }
   });
 };
+
+exports.uploadPhoto = (id, path) => {
+  return knex("users")
+    .where({ id: id })
+    .update({ photo: "/" + path });
+};
