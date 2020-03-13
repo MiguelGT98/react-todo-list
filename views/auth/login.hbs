@@ -3,19 +3,28 @@
     <h1 class="h3 mb-3 font-weight-normal">Login</h1>
     <p>
       Template source:
-        <a href="https://getbootstrap.com/docs/4.0/examples/" target="_blank">
-          https://getbootstrap.com/docs/4.0/examples/
-        </a>
+      <a href="https://getbootstrap.com/docs/4.0/examples/" target="_blank">
+        https://getbootstrap.com/docs/4.0/examples/
+      </a>
     </p>
     <p>
       You don't have an account? <a href="/register">Register</a>
     </p>
+    <p>
+      Forgot your password? <a href="/password-recovery">Click here</a>
+    </p>
   </div>
 
   {{#if authError}}
-    <div class="alert alert-danger">
-      {{authError}}
-    </div>
+  <div class="alert alert-danger">
+    {{authError}}
+  </div>
+  {{/if}}
+
+  {{#if changed}}
+  <div class="alert alert-success" role="alert">
+    Password succesfully changed
+  </div>
   {{/if}}
 
   <div class="form-label-group">

@@ -41,3 +41,76 @@ exports.create = user => {
 exports.all = () => {
   return knex.select("*").from("users");
 };
+
+exports.generatePasswordLink = email => {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  return this.findByEmail(email)
+    .then(user => {
+      if (!user) {
+        throw error("Email does not exist in the database.");
+      }
+
+      return knex("links").insert({
+        email: email,
+        valid_until: tomorrow
+      });
+    })
+    .then(id => {
+      return `/change-password/${id[0]}`;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
+
+exports.validatePasswordLink = id => {
+  return knex
+    .select("*")
+    .from("links")
+    .where("id", id)
+    .first()
+    .then(result => {
+      if (!result || new Date(result.valid_until) < new Date()) {
+        return false;
+      }
+
+      return true;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
+
+exports.changePassword = (id, user) => {
+  return this.validatePasswordLink(id).then(valid => {
+    if (valid) {
+      // Obtiene la contraseña definida por el usuario
+      let pass = user.password;
+      // Encripta la contraseña
+      pass = bcrypt.hashSync(pass, 10);
+      return knex
+        .select("*")
+        .from("links")
+        .where("id", id)
+        .first()
+        .then(link => {
+          return knex("users")
+            .where({ email: link.email })
+            .update({ password: pass });
+        })
+        .then(result => {
+          if (!result) {
+            return false;
+          }
+
+          return true;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  });
+};
