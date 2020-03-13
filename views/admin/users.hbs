@@ -1,0 +1,22 @@
+<main role="main" class="container">
+    <div class="starter-template">
+        <h1>You are {{ user.name }}</h1>
+        <p>
+            Here is the list of registered users:
+        </p>
+        <table border="0" cellspacing="0" cellpadding="0" id="users-table" class="table shadow-sm bg-white rounded">
+            <thead class="thead-dark">
+                <th data-sortname="name">Nombre</th>
+                <th data-sortname="email">Email</th>
+            </thead>
+            <tbody>
+                {{#each users}}
+                <tr class="user" data-name="{{name}}" data-email="{{email}}">
+                    <td>{{name}}</td>
+                    <td>{{email}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</main>
