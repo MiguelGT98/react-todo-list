@@ -10,8 +10,14 @@ exports.store = (req, res) => {
 };
 
 exports.done = (req, res) => {
-  Task.done(req.params.id).then(id => {
-    console.log(`Task with id: ${id} done`);
-    res.redirect("/");
-  });
+  Task.find(req.params.id)
+    .then(task => {
+      if (task) {
+        return Task.done(req.params.id);
+      }
+    })
+    .then(id => {
+      console.log(`Task with id: ${id} done`);
+      res.redirect("/");
+    });
 };
