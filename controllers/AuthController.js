@@ -3,7 +3,6 @@ let userModel = require("../models/User");
 
 exports.login = (req, res) => {
   let user = req.user;
-  console.log(user);
   const changed = req.query.changed ? true : false;
 
   let authError = req.query.authError == 1 ? "Invalid register data" : null;
