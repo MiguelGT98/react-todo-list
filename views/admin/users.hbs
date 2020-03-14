@@ -8,6 +8,7 @@
             <thead class="thead-dark">
                 <th data-sortname="name">Nombre</th>
                 <th data-sortname="email">Email</th>
+                <th data-sortname="role">Role</th>
             </thead>
             <tbody>
                 {{#each users}}
@@ -15,6 +16,7 @@
                     <td class="align-middle"><img src="{{photo}}" class="rounded-circle" alt="Profile photo"
                             style="width: 50px; height: 50px; object-fit: cover; margin-right: 20px;" /> {{name}}</td>
                     <td class="align-middle">{{email}}</td>
+                    <td class="align-middle" class="text-capitalize">{{role}}</td>
                 </tr>
                 {{/each}}
             </tbody>
