@@ -1,73 +1,32 @@
-let express = require("express");
-let app = express();
-let webRoutes = require("./routes/web");
-let appRoutes = require("./routes/app");
-let authMiddleware = require("./middlewares/AuthMiddleware");
+// Imports
+const express = require('express');
+const webRoutes = require('./routes/web');
 
-let cookieParser = require("cookie-parser");
-let session = require("express-session");
-let flash = require("express-flash");
-let sessionStore = new session.MemoryStore();
-let passport = require("passport");
+// Express app creation
+const app = express();
 
-/**
- * Configurations
- */
+// Configurations
+const appConfig = require('./configs/app');
 
-let appConfig = require("./configs/app");
-
-// Configuraciones para el view engine
-let exphbs = require("express-handlebars");
-// Imports a set of helpers for handlebars
-// https://github.com/helpers/handlebars-helpers
-let hbshelpers = require("handlebars-helpers");
-let multihelpers = hbshelpers();
-const extNameHbs = "hbs";
-let hbs = exphbs.create({
+// View engine configs
+const exphbs = require('express-handlebars');
+const hbshelpers = require("handlebars-helpers");
+const multihelpers = hbshelpers();
+const extNameHbs = 'hbs';
+const hbs = exphbs.create({
   extname: extNameHbs,
   helpers: multihelpers
 });
 app.engine(extNameHbs, hbs.engine);
-app.set("view engine", extNameHbs);
+app.set('view engine', extNameHbs);
 
-// Configuraciones para el bodyparser
-app.use(express.urlencoded({ extended: true }));
+// Receive parameters from the Form requests
+app.use(express.urlencoded({ extended: true }))
 
-// Configuraciones de las sesiones
-app.use(cookieParser());
-app.use(
-  session({
-    cookie: { maxAge: 60000000000 },
-    store: sessionStore,
-    saveUninitialized: true,
-    resave: "true",
-    secret: appConfig.secret
-  })
-);
-app.use(flash());
+// Routes
+app.use('/', webRoutes);
 
-// Configuraciones de passport
-require("./configs/passport");
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-/**
- * Routes
- */
-app.use("/", webRoutes);
-app.use("/app", authMiddleware.isAuth, appRoutes);
-
-/**
- * Serve static files on uploads
- */
-app.use("/uploads", express.static("uploads"));
-
-/**
- * App Init
- */
+// App init
 app.listen(appConfig.expressPort, () => {
-  console.log(
-    `Server is listenning on ${appConfig.expressPort}! (http://localhost:${appConfig.expressPort})`
-  );
+  console.log(`Server is listenning on ${appConfig.expressPort}! (http://localhost:${appConfig.expressPort})`);
 });

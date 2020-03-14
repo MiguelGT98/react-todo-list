@@ -1,35 +1,16 @@
-# Manejo de sesiones
+# Express Boilerplate
 
-## Requerimientos
+Este proyecto lo puedes utilizar como base para construir tus sistemas.
 
-El sistema depende de que tengas [Knex.js](http://knexjs.org/) instalado de forma global.
-
-```bash
-npm i knex -g
-```
+El proyecto ya viene configurado con algunos paquetes comunes que utilizamos.
 
 ## Instalación
 
-1. Guarda el archivo .env.example como .env y modifica las variables para que coincidan con tu ambiente
-
-```bash
-cp .env.example .env
-```
-
-2. Instala los paquetes indicados en el `package.json`
-
-```bash
+```shell
 npm install
 ```
 
-3. Ejecuta las migraciones
-
-```bash
-knex migrate:latest
+## Ejecución
 ```
-
-4. Ejecuta el servidor de Node.js
-
-```bash
 node server.js
 ```
