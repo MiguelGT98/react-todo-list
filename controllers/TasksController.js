@@ -22,7 +22,12 @@ exports.done = (req, res) => {
       }
     })
     .then(id => {
-      console.log(`Task with id: ${id} done`);
-      res.redirect("/");
+      if (req.xhr || req.headers.accept.indexOf("json") >= 0) {
+        Task.find(req.params.id).then(task => {
+          res.json(task);
+        });
+      } else {
+        res.redirect("/");
+      }
     });
 };

@@ -17,13 +17,11 @@
   <div class="row">
     <div class="col-lg-12" id="taskList">
       {{#each tasks}}
-      <div class="card my-3 {{#eq status 'done' }}bg-light{{/eq}}">
+      <div class="card my-3 {{#eq status 'done' }}bg-light{{/eq}}" id="{{id}}">
         <div class="card-body">
           <p class="card-text">{{ description }}</p>
           {{#eq status 'pending'}}
-          <form method="POST" action="/done/{{id}}">
-            <a href="javascript:;" onclick="parentNode.submit();" class="card-link">Done</a>
-          </form>
+          <input type="button" value="Done" onclick="completeTask(this);" class="btn btn-link p-0" data-id="{{id}}" />
           {{/eq}}
         </div>
       </div>
@@ -31,45 +29,3 @@
     </div>
   </div>
 </main>
-<script>
-  function saveTask() {
-    const description = document.getElementById("taskDescription").value;
-
-    const body = {
-      method: "POST",
-      headers: { Accept: "application/json", "Content-Type": "application/json" },
-      body: JSON.stringify({ description })
-    };
-
-    fetch("/tasks", body).then(response => {
-      if (!response.ok) {
-        throw "Error in AJAX call"
-      }
-
-      return response.json()
-
-    }).then(task => {
-      document.getElementById("taskDescription").value = "";
-      addTask(task)
-    }).catch(error => {
-      console.error(error)
-    })
-  }
-
-  function addTask({ description, id }) {
-    const html =
-      `
-      <div class="card my-3">
-        <div class="card-body">
-          <p class="card-text">${description}</p>
-          <form method="POST" action="/done/${id}">
-            <a href="javascript:;" onclick="parentNode.submit();" class="card-link">Done</a>
-          </form>
-        </div>
-      </div>
-    `
-    const node = document.createRange().createContextualFragment(html);
-    document.getElementById("taskList").prepend(node);
-  }
-
-</script>

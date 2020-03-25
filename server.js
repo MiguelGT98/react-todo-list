@@ -20,6 +20,9 @@ const hbs = exphbs.create({
 app.engine(extNameHbs, hbs.engine);
 app.set("view engine", extNameHbs);
 
+// Allow public directory to serve files
+app.use(express.static('public'));
+
 // Receive parameters from the Form requests
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

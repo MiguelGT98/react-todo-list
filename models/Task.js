@@ -1,6 +1,7 @@
 const knex = require("../database/connection");
 
 exports.PENDING = "pending";
+exports.DONE = "done";
 
 exports.all = () => {
   return knex.select("*").from("tasks");
@@ -18,6 +19,7 @@ exports.find = id => {
 
 exports.done = id => {
   return knex("tasks")
-    .where({ id: id })
-    .update({ status: "done" });
+    .update({ status: this.DONE })
+    .update("updated_at", knex.fn.now())
+    .where("id", id);
 };
