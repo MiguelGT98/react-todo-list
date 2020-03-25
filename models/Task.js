@@ -23,3 +23,9 @@ exports.done = id => {
     .update("updated_at", knex.fn.now())
     .where("id", id);
 };
+
+exports.delete = id => {
+  return knex("tasks")
+    .delete()
+    .where("id", id);
+};

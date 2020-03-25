@@ -21,11 +21,27 @@ exports.done = (req, res) => {
         return Task.done(req.params.id);
       }
     })
-    .then(id => {
+    .then(() => {
       if (req.xhr || req.headers.accept.indexOf("json") >= 0) {
         Task.find(req.params.id).then(task => {
           res.json(task);
         });
+      } else {
+        res.redirect("/");
+      }
+    });
+};
+
+exports.delete = (req, res) => {
+  Task.find(req.params.id)
+    .then(task => {
+      if (task) {
+        return Task.delete(req.params.id);
+      }
+    })
+    .then(() => {
+      if (req.xhr || req.headers.accept.indexOf("json") >= 0) {
+        res.json({ id: req.params.id });
       } else {
         res.redirect("/");
       }
