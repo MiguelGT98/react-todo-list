@@ -1,0 +1,19 @@
+.todo {
+  position: relative;
+  padding: 16px;
+  background-color: #fff;
+  box-shadow: 5px 2px 4px rgba(0, 0, 0, 0.18);
+  margin-bottom: 16px;
+  border-radius: 5px;
+  border: 1px solid #eee;
+}
+
+.todo.done{
+    background-color: #f2f2f2;
+}
+
+.todo > .icon-right {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}

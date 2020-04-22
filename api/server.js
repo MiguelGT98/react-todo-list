@@ -4,6 +4,7 @@ const webRoutes = require("./routes/web");
 
 // Express app creation
 const app = express();
+var cors = require("cors");
 
 // Configurations
 const appConfig = require("./configs/app");
@@ -15,13 +16,16 @@ const multihelpers = hbshelpers();
 const extNameHbs = "hbs";
 const hbs = exphbs.create({
   extname: extNameHbs,
-  helpers: multihelpers
+  helpers: multihelpers,
 });
 app.engine(extNameHbs, hbs.engine);
 app.set("view engine", extNameHbs);
 
 // Allow public directory to serve files
-app.use(express.static('public'));
+app.use(express.static("public"));
+
+// Allow CORS on all routes
+app.use(cors());
 
 // Receive parameters from the Form requests
 app.use(express.urlencoded({ extended: true }));
