@@ -1,0 +1,35 @@
+.homepage > form {
+  width: 100%;
+  display: flex;
+}
+
+.homepage > form input {
+  background-color: #f2f2f2;
+  border: unset;
+  flex: 1 1 auto;
+  padding: 12px 8px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.homepage > form button {
+  flex: 0 0 120px;
+  max-width: 120px;
+  background-color: #032b43;
+  padding: 8px 16px;
+  border: unset;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}

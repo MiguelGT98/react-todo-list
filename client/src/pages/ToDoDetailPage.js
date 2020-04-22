@@ -17,12 +17,12 @@ const ToDoDetailPage = ({ match }) => {
 
   return (
     <div>
-      <h2>To do detail</h2>
       {todo.id && (
         <ToDoDetail
           id={todo.id}
           description={todo.description}
           status={todo.status}
+          created_at={todo.created_at}
         ></ToDoDetail>
       )}
     </div>

@@ -5,15 +5,61 @@
   box-shadow: 5px 2px 4px rgba(0, 0, 0, 0.18);
   margin-bottom: 16px;
   border-radius: 5px;
-  border: 1px solid #eee;
+  border: 1px solid #ccc;
+  transition: background-color 0.5s ease, border 0.5s ease;
 }
 
-.todo.done{
-    background-color: #f2f2f2;
+.todo.done {
+  background-color: #032b43;
+  border: unset;
+}
+
+.todo > p {
+  margin-top: 0;
+}
+
+.todo > p > a {
+  font-weight: 700;
+  text-transform: capitalize;
+  color: #032b43;
+  text-decoration: none;
+  transition: color 0.5s ease;
+}
+
+.todo.done > p > a {
+  color: #fff;
+}
+
+.todo button {
+  background-color: #032b43;
+  border-radius: 5px;
+  padding: 8px 16px;
+  border: unset;
+  color: #fff;
+  text-transform: capitalize;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.todo button:hover {
+  cursor: pointer;
 }
 
 .todo > .icon-right {
   position: absolute;
   right: 16px;
   top: 16px;
+}
+
+.todo > .icon-right .trash-icon {
+  color: #4a4a4a;
+}
+
+.todo.done > .icon-right .trash-icon {
+  color: #fff;
+}
+
+.todo > .icon-right .trash-icon:hover {
+  color: #d00000;
+  cursor: pointer;
 }

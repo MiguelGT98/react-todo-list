@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ToDoList from "../components/ToDoList";
 import axios from "axios";
 
+import "./Homepage.css";
+
 const Homepage = () => {
   const [todos, setTodos] = useState([]);
 
@@ -41,9 +43,9 @@ const Homepage = () => {
   };
 
   return (
-    <div>
-      <h2>To do</h2>
-      <form className="input-group" onSubmit={createTodo}>
+    <div className="wrapper homepage">
+      <h2>To do app</h2>
+      <form className="input-group" onSubmit={createTodo} required="true">
         <input type="text" name="description"></input>
         <button>Add</button>
       </form>
