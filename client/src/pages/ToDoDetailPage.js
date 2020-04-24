@@ -8,7 +8,7 @@ const ToDoDetailPage = ({ match }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(`http://localhost:5000/task/${id}`);
+      const result = await axios(`${process.env.REACT_APP_API_URL}/task/${id}`);
       if (result.status === 200) setTodo(result.data);
     };
 
