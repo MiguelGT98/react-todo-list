@@ -1,16 +1,35 @@
-# Express Boilerplate
+# API de Todos
 
-Este proyecto lo puedes utilizar como base para construir tus sistemas.
+## Requerimientos
 
-El proyecto ya viene configurado con algunos paquetes comunes que utilizamos.
+El sistema depende de que tengas [Knex.js](http://knexjs.org/) instalado de forma global.
+
+```bash
+npm i knex -g
+```
 
 ## Instalación
 
-```shell
+1. Guarda el archivo .env.example como .env y modifica las variables para que coincidan con tu ambiente (El puerto de la api debe ser distinto al que React va a utilizar).
+
+```bash
+cp .env.example .env
+```
+
+2. Instala los paquetes indicados en el `package.json`
+
+```bash
 npm install
 ```
 
-## Ejecución
+3. Ejecuta las migraciones
+
+```bash
+knex migrate:latest
 ```
+
+4. Ejecuta el servidor de Node.js
+
+```bash
 node server.js
 ```
